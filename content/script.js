@@ -34,12 +34,12 @@ function searchResults(data) {
         body.append(row);
     }
     $('.products').css('visibility', 'visible');
-    $('.loader').css('display', 'none');
+    $('.spinner').css('display', 'none');
 }
 
 function onSearch() {
     $('.products').css('visibility', 'hidden');
-    $('.loader').css('display', 'inline');
+    $('.spinner').css('display', 'block');
     var name = $('#card_name').val();
     $.ajax({
         url: '/getPrices?card=' + name,
