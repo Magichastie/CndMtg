@@ -2,6 +2,8 @@
 //  OpenShift sample Node application
 var express = require('express');
 var fs      = require('fs');
+var prices = require('./priceExtract');
+var async = require('async');
 
 
 /**
@@ -101,9 +103,38 @@ var SampleApp = function() {
         };
 
         self.routes['/'] = function(req, res) {
-            res.setHeader('Content-Type', 'text/html');
-            res.send(self.cache_get('index.html') );
+            fs.readFile('content/main.html', function (err, data) {
+                if (err) {
+                    console.log(err);
+                    // HTTP Status: 404 : NOT FOUND
+                    // Content Type: text/plain
+                    res.writeHead(404, {'Content-Type': 'text/html'});
+                }else{	
+                    //Page found	  
+                    // HTTP Status: 200 : OK
+                    // Content Type: text/plain
+                    res.writeHead(200, {'Content-Type': 'text/html'});	
+
+                    // Write the content of the file to response body
+                    res.write(data.toString());		
+                }
+                    // Send the response body 
+                    res.end();
+            });   
         };
+        
+        self.routes['/getPrices'] = function(req, res) {
+            console.log('getPrices for %s', req.query.card);
+            prices.getPrices(req.query.card, function(products) {
+                res.writeHead(200, {'Content-Type': 'application/json'});
+                res.write(JSON.stringify(products));
+                res.end();
+            });
+        }
+        
+        self.routes['/noodle'] = function(req, res) {
+            res.end('Brittany is the BIGGEST noodle\n \
+\nLove, W');
     };
 
 
@@ -114,6 +145,7 @@ var SampleApp = function() {
     self.initializeServer = function() {
         self.createRoutes();
         self.app = express.createServer();
+        self.app.use(express.static('content'));
 
         //  Add handlers for the app (from the routes).
         for (var r in self.routes) {
