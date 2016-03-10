@@ -135,6 +135,7 @@ var SampleApp = function() {
         self.routes['/noodle'] = function(req, res) {
             res.end('Brittany is the BIGGEST noodle\n \
 \nLove, W');
+        };
     };
 
 
