@@ -1,24 +1,17 @@
 {
-  "name": "OpenShift-Sample-App",
+  "name": "cndMTG",
   "version": "1.0.0",
-  "description": "OpenShift Sample Application",
+  "description": "Aggregates multiple Canadian mtg retailers in one location to compare prices.",
   "keywords": [
     "OpenShift",
     "Node.js",
-    "application",
-    "openshift"
+    "Canada",
+    "MTG",
+    "magic"
   ],
   "author": {
-    "name": "OpenShift",
-    "email": "ramr@example.org",
-    "url": "http://www.openshift.com/"
+    "name": "William Macfarlane"
   },
-  "homepage": "http://www.openshift.com/",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/openshift/origin-server"
-  },
-
   "engines": {
     "node": ">= 0.6.0",
     "npm": ">= 1.0.0"
@@ -29,6 +22,10 @@
     "request": "^2.69.0"
   },
   "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
   "bundleDependencies": [],
 
   "private": true,
