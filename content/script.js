@@ -6,6 +6,8 @@ function init() {
             return false; 
         }
     });
+    
+    $('#card_name').focus();
 }
 
 function searchResults(data) {
