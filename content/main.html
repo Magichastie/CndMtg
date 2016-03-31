@@ -9,10 +9,12 @@
 <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
 </head>
 <body>
-    <div class="search_div w3-container w3-display-middle w3-third" style="top:30%";>
-        <h1>Canadian MTG Online Vendors</h1>
-        <span style="overflow: hidden;"><input id="card_name" type="text" name="card_name" class=""/></span>
-        <button class="search_button w3-btn w3-center">Search</button>
+    <div id="search_wrapper" class="w3-container w3-display-middle" style="top:30">
+        <div class="search_div w3-container">
+            <h1 style="width:auto">Canadian MTG Online Vendors</h1>
+            <button class="search_button w3-btn">Search</button>
+            <span style="display: block; overflow: hidden;"><input id="card_name" type="text" name="card_name" class="w3-input" style="width: 100%"/></span>
+        </div>
     </div>
     <div class="spinner">
         <div class="dot1"></div>
