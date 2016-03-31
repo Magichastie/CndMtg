@@ -40,6 +40,7 @@ function searchResults(data) {
 }
 
 function onSearch() {
+    $('.search_div').removeClass('w3-display-middle');
     $('.products').css('visibility', 'hidden');
     $('.spinner').css('display', 'block');
     var name = $('#card_name').val();
