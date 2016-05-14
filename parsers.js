@@ -6,7 +6,8 @@ module.exports = {
     wizardtower: facetoface,
     gamekeeper: gamekeeper,
     magicstronghold: magicstronghold,
-    gamersspot: magicstronghold
+    gamersspot: magicstronghold,
+    tome2: tome2
 }
 
 var request = require('request');
@@ -193,6 +194,48 @@ function magicstronghold(body, url, search) {
     var items = list.children('li');
     items.each(function () {
         var name = $('h4.name', this).text();
+        if(!new RegExp(search, 'i').test(name))
+            return [];
+        var set = $('span.category', this).text();
+        if(DEBUG) {
+            console.log(name);
+            console.log(set);
+        }
+        
+        var conditions = $('div.variant-row.row', this);
+        
+        conditions.each(function () {
+            var condition_full = $('span.variant-short-info', this).text();
+            var condition_pattern = /[^,]*,[^,]*/;
+            var condition = condition_pattern.exec(condition_full);
+            if (condition !== null) {
+                condition = condition[0];
+            }
+
+            var condition = null;
+            var price = convertPriceTextToNumber($('span.regular.price', this).text().trim());
+            var quantity = convertQuantityTextToNumber($('input.qty', this).attr('max'));
+            products.push(new Product(url + search, price, quantity, condition, set, name));
+            if(DEBUG)
+                console.log([condition, price, quantity].join(', '));
+        });
+        if(DEBUG)
+            console.log('-----------------------');
+    });
+    return products;
+}
+
+function tome2(body, url, search) {
+    var products = [];
+    var cheerio = require('cheerio');
+    $ = cheerio.load(body);
+    
+    var list = $('ul.product-results');
+    
+   // each item will contain a version of the card (version = foil & set)
+    var items = list.children('li');
+    items.each(function () {
+        var name = $('h4.title', this).text();
         if(!new RegExp(search, 'i').test(name))
             return [];
         var set = $('span.category', this).text();

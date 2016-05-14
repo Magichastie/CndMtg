@@ -27,12 +27,21 @@ function getPrices(search, callback) {
     var gamekeeper_search = 'http://www.gamekeeperonline.com/products/search?query=';
     searches.push({url: gamekeeper_search, parseFunc: parser.gamekeeper});
 
-    var magicstronghold_search = 'http://www.magicstronghold.com/products/search?q='
+    var magicstronghold_search = 'http://www.magicstronghold.com/products/search?q=';
     searches.push({url: magicstronghold_search,parseFunc: parser.magicstronghold});
 
     var gamersspot_search = 'http://www.gamersspot.ca/products/search?q=';
     searches.push({url: gamersspot_search, parseFunc: parser.gamersspot});
 
+    // var tome2_search = 'http://tome2boutique.crystalcommerce.com/products/search?q=';
+    // searches.push({url: tome2_search, parseFunc: parser.});
+    
+    // var fusion_search = 'http://www.fusiongamingonline.com/products/search?q=';
+    // searches.push({url: fusion_search, parseFunc: parser.});
+    
+    // var manatoxik_search = 'http://manatoxik.crystalcommerce.com/products/search?q=';
+    // searches.push({url: manatoxik_search, parseFunc: parser.});
+    
     var request = require('request');
     var products = [];
 
