@@ -33,14 +33,14 @@ function getPrices(search, callback) {
     var gamersspot_search = 'http://www.gamersspot.ca/products/search?q=';
     searches.push({url: gamersspot_search, parseFunc: parser.gamersspot});
 
-    // var tome2_search = 'http://tome2boutique.crystalcommerce.com/products/search?q=';
-    // searches.push({url: tome2_search, parseFunc: parser.});
+    var tome2_search = 'http://tome2boutique.crystalcommerce.com/products/search?q=';
+    searches.push({url: tome2_search, parseFunc: parser.tome2});
     
-    // var fusion_search = 'http://www.fusiongamingonline.com/products/search?q=';
-    // searches.push({url: fusion_search, parseFunc: parser.});
+    var fusion_search = 'http://www.fusiongamingonline.com/products/search?q=';
+    searches.push({url: fusion_search, parseFunc: parser.tome2});
     
-    // var manatoxik_search = 'http://manatoxik.crystalcommerce.com/products/search?q=';
-    // searches.push({url: manatoxik_search, parseFunc: parser.});
+    var manatoxik_search = 'http://manatoxik.crystalcommerce.com/products/search?q=';
+    searches.push({url: manatoxik_search, parseFunc: parser.tome2});
     
     var request = require('request');
     var products = [];

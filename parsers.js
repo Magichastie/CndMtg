@@ -235,10 +235,10 @@ function tome2(body, url, search) {
    // each item will contain a version of the card (version = foil & set)
     var items = list.children('li');
     items.each(function () {
-        var name = $('h4.title', this).text();
+        var name = $('h4.title', this).text().trim();
         if(!new RegExp(search, 'i').test(name))
             return [];
-        var set = $('span.category', this).text();
+        var set = $('span.cat-name', this).text();
         if(DEBUG) {
             console.log(name);
             console.log(set);
@@ -249,11 +249,18 @@ function tome2(body, url, search) {
         conditions.each(function () {
             
             var condition_full = $('span.variant-short-info', this).text().trim();
-            var condition_pattern = /[^,]*,[^,]*/;
-            var condition = condition_pattern.exec(condition_full);
-            
+            var condition_pattern = /([^,]*,[^,]*),\s*(\d+)/;
+            var matches = condition_pattern.exec(condition_full);
+            var condition = null;
+            if(matches !== null) {
+                condition = matches[1];
+            }
+
             var price = convertPriceTextToNumber($('span.regular.price', this).text().trim());
-            var quantity = convertQuantityTextToNumber($('input.qty', this).attr('max'));
+            var quantity = null;
+            if(matches != null) {
+                quantity = convertQuantityTextToNumber(matches[2]);
+            }
             products.push(new Product(url + search, price, quantity, condition, set, name));
             if(DEBUG)
                 console.log([condition, price, quantity].join(', '));
