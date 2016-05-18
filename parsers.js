@@ -206,15 +206,24 @@ function magicstronghold(body, url, search) {
         
         conditions.each(function () {
             var condition_full = $('span.variant-short-info', this).text();
-            var condition_pattern = /[^,]*,[^,]*/;
-            var condition = condition_pattern.exec(condition_full);
-            if (condition !== null) {
-                condition = condition[0];
+            var condition_pattern = /([^,]*,[^,]*),\s*(\d+)/;
+            var matches = condition_pattern.exec(condition_full);
+            var condition = null;
+            if(matches !== null) {
+                condition = matches[1];
             }
 
-            var condition = null;
             var price = convertPriceTextToNumber($('span.regular.price', this).text().trim());
-            var quantity = convertQuantityTextToNumber($('input.qty', this).attr('max'));
+            var quantity = null;
+            if(matches != null) {
+                quantity = convertQuantityTextToNumber(matches[2]);
+            }
+            
+            if($(this).hasClass('no-stock')) {
+                quantity = 0;
+                condition = 'Not in stock';
+            }
+            
             products.push(new Product(url + search, price, quantity, condition, set, name));
             if(DEBUG)
                 console.log([condition, price, quantity].join(', '));
@@ -261,6 +270,12 @@ function tome2(body, url, search) {
             if(matches != null) {
                 quantity = convertQuantityTextToNumber(matches[2]);
             }
+            
+            if($('span.no-stock', this).length !== 0) {
+                quantity = 0;
+                condition = 'Not in stock';
+            }
+            
             products.push(new Product(url + search, price, quantity, condition, set, name));
             if(DEBUG)
                 console.log([condition, price, quantity].join(', '));
