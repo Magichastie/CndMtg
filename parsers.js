@@ -1,3 +1,4 @@
+alert();
 var DEBUG = false;
 
 module.exports = {
