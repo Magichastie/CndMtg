@@ -39,7 +39,7 @@ function searchResults(data) {
         
         body.append(row);
     }
-    $('.products').css('visibility', 'visible');
+    $('#products').css('visibility', 'visible');
     $('.spinner').css('display', 'none');
 }
 
