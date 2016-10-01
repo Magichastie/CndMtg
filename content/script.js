@@ -1,4 +1,5 @@
 function init() {
+	alert();
     $('.search_button').click(onSearch);
     $('#card_name').keypress(function (e) {
         if (e.which == 13) {
