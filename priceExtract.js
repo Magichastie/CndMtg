@@ -16,38 +16,38 @@ function getPrices(search, callback) {
     var searches = [];
 
     var facetoface_search = 'http://www.facetofacegames.com/products/search?query=';
-    searches.push({url: facetoface_search, parseFunc: parser.facetoface});
+    searches.push({url: facetoface_search, parseFunc: parser.facetoface, vendor: 'Face to Face'});
 
     var comichunter_search = 'http://comichunter.crystalcommerce.com/products/search?query=';
-    searches.push({url: comichunter_search, parseFunc: parser.comichunter});
+    searches.push({url: comichunter_search, parseFunc: parser.comichunter, vendor: 'Comic Hunter'});
 
     var wizardtower_search = 'http://www.kanatacg.com/products/search?query=';
-    searches.push({url: wizardtower_search, parseFunc: parser.wizardtower});
+    searches.push({url: wizardtower_search, parseFunc: parser.wizardtower, vendor: 'Wizard\'s tower'});
 
     var gamekeeper_search = 'http://www.gamekeeperonline.com/products/search?query=';
-    searches.push({url: gamekeeper_search, parseFunc: parser.gamekeeper});
+    searches.push({url: gamekeeper_search, parseFunc: parser.gamekeeper, vendor: 'Game Keeper'});
 
     var magicstronghold_search = 'http://www.magicstronghold.com/products/search?q=';
-    searches.push({url: magicstronghold_search,parseFunc: parser.magicstronghold});
+    searches.push({url: magicstronghold_search,parseFunc: parser.magicstronghold, vendor: 'Magic Stronghold'});
 
     var gamersspot_search = 'http://www.gamersspot.ca/products/search?q=';
-    searches.push({url: gamersspot_search, parseFunc: parser.gamersspot});
+    searches.push({url: gamersspot_search, parseFunc: parser.gamersspot, vendor: 'Gamer\'s Spot'});
 
     var tome2_search = 'http://tome2boutique.crystalcommerce.com/products/search?q=';
-    searches.push({url: tome2_search, parseFunc: parser.tome2});
+    searches.push({url: tome2_search, parseFunc: parser.tome2, vendor: 'Tome 2'});
     
     var fusion_search = 'http://www.fusiongamingonline.com/products/search?q=';
-    searches.push({url: fusion_search, parseFunc: parser.tome2});
+    searches.push({url: fusion_search, parseFunc: parser.tome2, vendor: 'Fusion Gaming'});
     
     var manatoxik_search = 'http://manatoxik.crystalcommerce.com/products/search?q=';
-    searches.push({url: manatoxik_search, parseFunc: parser.tome2});
+    searches.push({url: manatoxik_search, parseFunc: parser.tome2, vendor: 'Mana Toxik'});
     
     var request = require('request');
     var products = [];
 
     function getProducts(item, callback) {
         request.get(item.url + search, function(err, resp, body) {
-            var res = item.parseFunc(body, item.url, search);
+            var res = item.parseFunc(body, item, search);
             products = products.concat(res);
             callback();
         });

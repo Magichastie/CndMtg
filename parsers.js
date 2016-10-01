@@ -12,8 +12,9 @@ module.exports = {
 
 var request = require('request');
 
-function Product(url, price, quantity, condition, set, name) {
+function Product(url, vendor, price, quantity, condition, set, name) {
     this.url = url;
+	this.vendor = vendor;
     this.price = price;
     this.quantity = quantity;
     this.condition = condition;
@@ -57,7 +58,9 @@ function convertCondition(text_value) {
     return text_value.replace("Condition: ", '');
 }
 
-function facetoface(body, url, search) {
+function facetoface(body, bundle, search) {
+	var url = bundle.url;
+	var vendor = bundle.vendor;
     var products = [];
     var cheerio = require('cheerio');
     $ = cheerio.load(body);
@@ -90,7 +93,7 @@ function facetoface(body, url, search) {
                 var condition = convertCondition($(info.get(0)).text().trim());
                 var price = convertPriceTextToNumber($(info.get(1)).text().trim());
                 var quantity = convertQuantityTextToNumber($(info.get(2)).text().trim());
-                products.push(new Product(url + search, price, quantity, condition, set, name));
+                products.push(new Product(url + search, vendor, price, quantity, condition, set, name));
                 if(DEBUG)
                     console.log([condition, price, quantity].join(', '));
             });
@@ -101,7 +104,9 @@ function facetoface(body, url, search) {
     return products;
 }
 
-function comichunter(body, url, search) {
+function comichunter(body, bundle, search) {
+	var url = bundle.url;
+	var vendor = bundle.vendor;
     var products = [];
     var cheerio = require('cheerio');
     $ = cheerio.load(body);
@@ -131,7 +136,7 @@ function comichunter(body, url, search) {
                 var condition = $($(info.get(0)).children('span').get(1)).text().trim();
                 var price = convertPriceTextToNumber($(info.get(1)).text().trim());
                 var quantity = convertQuantityTextToNumber($(info.get(2)).text().trim());
-                products.push(new Product(url + search, price, quantity, condition, set, name));
+                products.push(new Product(url + search, vendor, price, quantity, condition, set, name));
                 if(DEBUG)
                     console.log([set, condition, price, quantity].join(', '));
             });
@@ -142,7 +147,9 @@ function comichunter(body, url, search) {
     return products;
 }
 
-function gamekeeper(body, url, search) {
+function gamekeeper(body, bundle, search) {
+	var url = bundle.url;
+	var vendor = bundle.vendor;
     var products = [];
     var cheerio = require('cheerio');
     $ = cheerio.load(body);
@@ -172,7 +179,7 @@ function gamekeeper(body, url, search) {
                 var condition = $($(info.get(0)).children('span').get(1)).text().trim();
                 var price = convertPriceTextToNumber($(info.get(1)).text().trim());
                 var quantity = convertQuantityTextToNumber($(info.get(2)).text().trim());
-                products.push(new Product(url + search, price, quantity, condition, set, name));
+                products.push(new Product(url + search, vednor, price, quantity, condition, set, name));
                 if(DEBUG)
                     console.log([set, condition, price, quantity].join(', '));
             });
@@ -183,7 +190,9 @@ function gamekeeper(body, url, search) {
     return products;
 }
 
-function magicstronghold(body, url, search) {
+function magicstronghold(body, bundle, search) {
+	var url = bundle.url;
+	var vendor = bundle.vendor;
     var products = [];
     var cheerio = require('cheerio');
     $ = cheerio.load(body);
@@ -224,7 +233,7 @@ function magicstronghold(body, url, search) {
                 condition = 'Not in stock';
             }
             
-            products.push(new Product(url + search, price, quantity, condition, set, name));
+            products.push(new Product(url + search, vendor, price, quantity, condition, set, name));
             if(DEBUG)
                 console.log([condition, price, quantity].join(', '));
         });
@@ -234,7 +243,9 @@ function magicstronghold(body, url, search) {
     return products;
 }
 
-function tome2(body, url, search) {
+function tome2(body, bundle, search) {
+	var url = bundle.url;
+	var vendor = bundle.vendor;
     var products = [];
     var cheerio = require('cheerio');
     $ = cheerio.load(body);
@@ -276,7 +287,7 @@ function tome2(body, url, search) {
                 condition = 'Not in stock';
             }
             
-            products.push(new Product(url + search, price, quantity, condition, set, name));
+            products.push(new Product(url + search, vendor, price, quantity, condition, set, name));
             if(DEBUG)
                 console.log([condition, price, quantity].join(', '));
         });
