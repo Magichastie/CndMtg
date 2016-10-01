@@ -179,7 +179,7 @@ function gamekeeper(body, bundle, search) {
                 var condition = $($(info.get(0)).children('span').get(1)).text().trim();
                 var price = convertPriceTextToNumber($(info.get(1)).text().trim());
                 var quantity = convertQuantityTextToNumber($(info.get(2)).text().trim());
-                products.push(new Product(url + search, vednor, price, quantity, condition, set, name));
+                products.push(new Product(url + search, vendor, price, quantity, condition, set, name));
                 if(DEBUG)
                     console.log([set, condition, price, quantity].join(', '));
             });

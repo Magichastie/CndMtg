@@ -21,7 +21,7 @@ function searchResults(data) {
         row.append(name);
 		
 		var vendor_td = $('<td>');
-		var vendor = $('<a>', {href: data[i].url, target: '_blank', text: data[i].name});
+		var vendor = $('<a>', {href: data[i].url, target: '_blank', text: data[i].vendor});
 		vendor_td.append(vendor);
 		row.append(vendor_td)
         
