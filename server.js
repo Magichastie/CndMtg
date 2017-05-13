@@ -60,7 +60,12 @@ app.get('/noodle', function(req, res) {
 var server_ip  = process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1";
 var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
 
-http.listen(server_port, server_ip, 511, function() { console.log("Listening on  localhost:8080")});
+app.set('port', process.env.OPENSHIFT_NODEJS_PORT || process.env.PORT || 3002);
+app.set('ip', process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1");
+
+http.listen(app.get('port'), app.get('ip'), function () {
+	console.log("✔ Express server listening at %s:%d ", app.get('ip'),app.get('port'))};
+	);
 
 //var server = app.listen(server_port, server_ip_address, function(){
 //  console.log("Listening on " + server_ip_address + ", server_port " + server_port)
