@@ -60,7 +60,7 @@ app.get('/noodle', function(req, res) {
 var server_ip  = process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1";
 var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
 
-app.set('port', process.env.OPENSHIFT_NODEJS_PORT || process.env.PORT || 3002);
+app.set('port', process.env.OPENSHIFT_NODEJS_PORT || process.env.PORT || 8080);
 app.set('ip', process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1");
 
 http.listen(app.get('port'), app.get('ip'), function () {
