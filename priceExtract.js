@@ -12,7 +12,7 @@ if(search == null) {
 getPrices(search);
 */
 
-function getPrices(search, socket_callback) {
+function getPrices(search, product_callback, is_socket) {
     var parser = require("./parsers");
     var async = require('async');
     var searches = [];
@@ -49,7 +49,8 @@ function getPrices(search, socket_callback) {
     function getProducts(item, callback) {
         request.get(item.url + search, function(err, resp, body) {
             var res = item.parseFunc(body, item, search);
-	    socket_callback(res);
+	    if(is_socket) 
+		    product_callback(res);
             callback();
         });
     };
@@ -79,7 +80,10 @@ function getPrices(search, socket_callback) {
         */
     }
 
-    async.each(searches, getProducts);
+    if(is_socket)
+	    async.each(searches, getProducts);
+    else
+	    async.each(searches, getProducts, product_callback);
 }
 
 /*

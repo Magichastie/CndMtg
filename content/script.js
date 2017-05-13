@@ -70,38 +70,6 @@ productsApp.controller('productListController', function productListController($
 
 });
 
-
-function searchResults(data) {
-	var body = $('tbody');
-	for(var i = 0; i < data.length; i++) {
-		var row = $('<tr>');
-
-		var name = $('<td>', {text: data[i].name});
-		name.append(name);
-		row.append(name);
-
-		var vendor_td = $('<td>');
-		var vendor = $('<a>', {href: data[i].url, target: '_blank', text: data[i].vendor});
-		vendor_td.append(vendor);
-		row.append(vendor_td)
-
-			var set = $('<td>', {text: data[i].set});
-		row.append(set);
-
-		var condition = $('<td>', {text: data[i].condition});
-		row.append(condition);
-
-		var price = $('<td>', {text: data[i].price});
-		row.append(price);
-
-		var quantity = $('<td>', {text: data[i].quantity});
-		row.append(quantity);
-
-		body.append(row);
-	}
-}
-
-
 $(document).ready(function() {
 	init();
 });
