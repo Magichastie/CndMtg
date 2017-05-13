@@ -1,8 +1,22 @@
 var express = require('express');
 var app = express();
+var http = require('http').Server(app);
 var fs = require("fs");
 var prices = require('./priceExtract');
 var async = require('async');
+var io = require('socket.io')(http);
+
+io.on('connection', function(socket) {
+	console.log('A user connected');
+	socket.on('getPrices', function(data) {
+	    prices.getPrices(data, function(products) {
+	        socket.emit('products', JSON.stringify(products));
+	    });
+});
+	socket.on('disconnect', function() {
+		console.log('A user disconnected');
+	});
+});
 
 app.use(express.static('content'));
 
@@ -30,6 +44,7 @@ app.get('', function(req, res) {
 
 app.get('/getPrices', function(req, res) {
     console.log('getPrices for %s', req.query.card);
+    
     prices.getPrices(req.query.card, function(products) {
         res.writeHead(200, {'Content-Type': 'application/json'});
         res.write(JSON.stringify(products));
@@ -42,12 +57,13 @@ app.get('/noodle', function(req, res) {
 \nLove, W');
 });
 
-var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080
-var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1'
+var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
 
-var server = app.listen(server_port, server_ip_address, function(){
-  console.log("Listening on " + server_ip_address + ", server_port " + server_port)
-});
+http.listen(server_port, function() { console.log("Listening on  localhost:8080")});
+
+//var server = app.listen(server_port, server_ip_address, function(){
+//  console.log("Listening on " + server_ip_address + ", server_port " + server_port)
+//});
 
 /*
 var server = app.listen(server_port, server_ip_address, function() {

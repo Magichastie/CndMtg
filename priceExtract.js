@@ -1,6 +1,7 @@
 module.exports = {
     getPrices: getPrices
 }
+
 /*
 var search = process.argv[2];
 if(search == null) {
@@ -10,7 +11,8 @@ if(search == null) {
 
 getPrices(search);
 */
-function getPrices(search, callback) {
+
+function getPrices(search, socket_callback) {
     var parser = require("./parsers");
     var async = require('async');
     var searches = [];
@@ -41,14 +43,13 @@ function getPrices(search, callback) {
     
     var manatoxik_search = 'http://manatoxik.crystalcommerce.com/products/search?q=';
     searches.push({url: manatoxik_search, parseFunc: parser.tome2, vendor: 'Mana Toxik'});
-    
-    var request = require('request');
-    var products = [];
 
+    var request = require('request');
+    
     function getProducts(item, callback) {
         request.get(item.url + search, function(err, resp, body) {
             var res = item.parseFunc(body, item, search);
-            products = products.concat(res);
+	    socket_callback(res);
             callback();
         });
     };
@@ -78,7 +79,7 @@ function getPrices(search, callback) {
         */
     }
 
-    async.each(searches, getProducts, outputResults);
+    async.each(searches, getProducts);
 }
 
 /*

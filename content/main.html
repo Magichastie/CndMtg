@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="productsApp">
 <head>
 <title>Canadian MTG Online Vendors</title>
 <script src="jquery-2.2.1.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.1/socket.io.js"></script>
 <script src="script.js"></script>
 <link rel="icon" type="image/png" href="icon.png"/>
 <link rel="stylesheet" type="text/css" href="style.css">
@@ -22,11 +24,11 @@
         <div class="dot1"></div>
         <div class="dot2"></div>
     </div>
-    <table class="w3-table-all" id="products" style="visibility: hidden;">
+    <table ng-controller="productListController" class="w3-table-all" id="products" style="visibility: hidden;">
         <thead>
             <tr>
                 <td>Name</td>
-				<td>Vendor</td>
+		<td>Vendor</td>
                 <td>Set</td>
                 <td>Condition</td>
                 <td>Price</td>
@@ -34,6 +36,14 @@
             </tr>
         </thead>
         <tbody>
+		<tr ng-repeat="item in products | orderBy: sortFunc: false: compareFunc">
+			<td>{{item.name}}</td>
+			<td><a href="{{item.url}}" target="_blank">{{item.vendor}}</a></td>
+			<td>{{item.set}}</td>
+			<td>{{item.condition}}</td>
+			<td>{{item.price}}</td>
+			<td>{{item.quantity | number}}</td>
+		</tr>
         </tbody>
     </table>
 </body>
